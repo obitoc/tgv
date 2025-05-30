@@ -1,4 +1,10 @@
 module tgv
+pub struct Entities{
+	pub:
+		offset int @[json:"offset"]
+		length int @[json:"length"]
+		typ string @[json:"type"]
+}
 pub struct PhotoSize{
 	pub:
 		file_id string @[json:"file_id"]
@@ -31,6 +37,8 @@ pub struct Message {
 		chat Chat @[json:"chat"]
 		message_id i64 @[json:"message_id"]
 		date i64 @[json:"date"]
+		photo []PhotoSize @[json:"photo";default:""]
+		entities []Entities @[json:"entities"]
 		text string @[json:"text";default:""]
 }
 pub struct MessageContext{

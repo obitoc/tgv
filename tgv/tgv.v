@@ -2,7 +2,7 @@
 module tgv
 import net.http
 import x.json2
-
+import json
 pub fn new(token string) Bot {
 	return Bot {
 		url: "https://api.telegram.org/bot$token"
@@ -19,7 +19,7 @@ pub fn (mut bot Bot) on(handler fn(MessageContext)){
 }
 fn (bot Bot) handle_update(update json2.Any,speedup bool){
 	println(update)
-	data := json2.decode[MessageContext](update.str()) or {return}
+	data := json.decode(MessageContext,update.str()) or {return}
 	println(data)
 	for handler in bot.msg_handlers{
 		if speedup{go handler(data)} else {handler(data)}
@@ -27,7 +27,7 @@ fn (bot Bot) handle_update(update json2.Any,speedup bool){
 }
 pub fn (bot Bot) get_updates(offset int) ![]json2.Any {
 
-	idk := http.get(bot.url + "/getUpdates?offset=${offset}&timeout=30"	)!
+	idk := http.get(bot.url + "/getUpdates?offset=${offset}"	)!
 	body_json := convert_to_json(idk.body) or {
 		return []
 	}
