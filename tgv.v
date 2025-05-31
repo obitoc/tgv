@@ -12,15 +12,39 @@ pub fn new(token string) Bot {
 fn convert_to_json(data string) !json2.Any {
 	return json2.raw_decode(data)!
 }
-pub fn (mut bot Bot) on(handler fn(MessageContext)){
+pub fn (mut bot Bot) on(handler fn(MessageContext,string)){
 	bot.msg_handlers << handler
 }
 fn (bot Bot) handle_update(update json2.Any,speedup bool){
+	mut typeo := ""
 	data := json.decode(MessageContext,update.str()) or {return}
+	if data.message.date != 0{
+		typeo += "message"
+	} else if data.edited_message.date != 0{
+		typeo += "edited_message"
+	} else if data.edited_business_message.date != 0{
+
+		typeo += "edited_business_message"
+	} else if data.channel_post.date != 0{
+
+		typeo += "channel_post"
+	} else if data.edited_channel_post.date != 0{
+
+		typeo += "edited_channel_post"
+	} else if data.business_message.date != 0{
+
+		typeo += "business_message"
+	}
+	println(typeo)
 	for handler in bot.msg_handlers{
-		if speedup{go handler(data)} else {handler(data)}
+		if speedup{go handler(data,typeo)} else {handler(data,typeo)}
 	}
 }
+
+
+
+
+
 pub fn (bot Bot) get_updates(offset int) ![]json2.Any {
 
 	idk := http.get(bot.url + "/getUpdates?offset=${offset}"	)!

@@ -45,12 +45,17 @@ pub struct MessageContext{
 	pub:
 		update_id i64 @[json:"update_id"]
 		message Message @[json:"message"]
+		edited_message Message @[json:"edited_message"]
+		channel_post Message @[json:"channel_post"]
+		edited_channel_post	Message @[json:"edited_channel_post"]
+		business_message Message @[json:"business_message"]
+		edited_business_message	Message @[json:"edited_business_message"]
 
 }
 pub struct Bot {
 	pub:
 		url string
 	mut:
-		msg_handlers []fn(MessageContext)
+		msg_handlers []fn(MessageContext,string)
 
 }

@@ -23,3 +23,7 @@ bot.send_message(id,"msg",opts)
 bot.send_message(id,"msg",map[string]string{})
 
 // btw if something went wrong see compiler output maybe you need to add or | !
+
+// for bot message Context
+bot.on(fn [bot](ctx tgv.MessageContext,typeo string){})
+// pass a func to handler pass bot into the scope 2 params one is Context and two is type of context
