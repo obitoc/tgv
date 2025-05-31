@@ -18,9 +18,7 @@ pub fn (mut bot Bot) on(handler fn(MessageContext)){
 	bot.msg_handlers << handler
 }
 fn (bot Bot) handle_update(update json2.Any,speedup bool){
-	println(update)
 	data := json.decode(MessageContext,update.str()) or {return}
-	println(data)
 	for handler in bot.msg_handlers{
 		if speedup{go handler(data)} else {handler(data)}
 	}

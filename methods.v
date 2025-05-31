@@ -2,6 +2,22 @@ module tgv
 import x.json2
 import net.http
 
+pub fn (bot Bot) send_chat_action(chat_id string,chat_action string) !json2.Any {
+
+
+	mut form := {
+		"chat_id":chat_id,
+		"action":chat_action,
+	}
+
+	opts := json2.encode(form)
+	idk := http.post_json(
+		bot.url + "/sendChatAction",
+		opts,
+		)!
+
+	return convert_to_json(idk.body)
+}
 pub fn (bot Bot) delete_message(chat_id string,message_id string) !json2.Any {
 
 
