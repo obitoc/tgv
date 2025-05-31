@@ -35,7 +35,6 @@ fn (bot Bot) handle_update(update json2.Any,speedup bool){
 
 		typeo += "business_message"
 	}
-	println(typeo)
 	for handler in bot.msg_handlers{
 		if speedup{go handler(data,typeo)} else {handler(data,typeo)}
 	}
