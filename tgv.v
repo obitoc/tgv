@@ -12,8 +12,6 @@ pub fn new(token string) Bot {
 fn convert_to_json(data string) !json2.Any {
 	return json2.raw_decode(data)!
 }
-
-
 pub fn (mut bot Bot) on(handler fn(MessageContext)){
 	bot.msg_handlers << handler
 }
