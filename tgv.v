@@ -2,7 +2,6 @@
 module tgv
 import net.http
 import x.json2
-import json
 pub fn new(token string) Bot {
 	return Bot {
 		url: "https://api.telegram.org/bot$token"
@@ -12,47 +11,12 @@ pub fn new(token string) Bot {
 fn convert_to_json(data string) !json2.Any {
 	return json2.raw_decode(data)!
 }
-pub fn (mut bot Bot) on(handler fn(Context,string)){
+pub fn (mut bot Bot) on(handler fn(json2.Any,string)){
 	bot.msg_handlers << handler
 }
 fn (bot Bot) handle_update(update json2.Any,speedup bool){
 	mut typeo := ""
-	data := json.decode(Context,update.str()) or {return}
-	if data.message.date != 0{
-		typeo += "message"
-	} else if data.edited_message.date != 0{
-		typeo += "edited_message"
-	} else if data.edited_business_message.date != 0{
-
-		typeo += "edited_business_message"
-	} else if data.channel_post.date != 0{
-
-		typeo += "channel_post"
-	} else if data.edited_channel_post.date != 0{
-
-		typeo += "edited_channel_post"
-	} else if data.business_message.date != 0{
-
-		typeo += "business_message"
-	} else if data.deleted_message_business.date != 0 {
-		typeo += "deleted_message_business"
-	} else if data.message_reaction.date != 0{
-		typeo += "message_reaction"
-	} else if data.message_reaction_count.date != 0{
-		typeo += "message_reaction_count"
-	} else if data.inline_query.date != 0 {
-		typeo += "inline_query"
-	} else if data.chosen_inline_result.date != 0{
-		typeo += "chosen_inline_result"
-	} else if data.callback_query.date != 0{
-		typeo += "callback_query"
-	} else if data.shipping_query.date != 0{
-		typeo += "shipping_query"
-	} else if data.pre_checkout_query.date != 0 {
-		typeo += "pre_checkout_query"
-	} else if data.paid_media_purchased.date != 0{
-		typeo += "paid_media_purchased"
-	}
+	data := convert_to_json(update.str()) or {return}
 
 	for handler in bot.msg_handlers{
 		if speedup{go handler(data,typeo)} else {handler(data,typeo)}
