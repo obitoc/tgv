@@ -34,7 +34,26 @@ fn (bot Bot) handle_update(update json2.Any,speedup bool){
 	} else if data.business_message.date != 0{
 
 		typeo += "business_message"
+	} else if data.deleted_message_business.date != 0 {
+		typeo += "deleted_message_business"
+	} else if data.message_reaction.date != 0{
+		typeo += "message_reaction"
+	} else if data.message_reaction_count.date != 0{
+		typeo += "message_reaction_count"
+	} else if data.inline_query.date != 0 {
+		typeo += "inline_query"
+	} else if data.chosen_inline_result.date != 0{
+		typeo += "chosen_inline_result"
+	} else if data.callback_query.date != 0{
+		typeo += "callback_query"
+	} else if data.shipping_query.date != 0{
+		typeo += "shipping_query"
+	} else if data.pre_checkout_query.date != 0 {
+		typeo += "pre_checkout_query"
+	} else if data.paid_media_purchased.date != 0{
+		typeo += "paid_media_purchased"
 	}
+
 	for handler in bot.msg_handlers{
 		if speedup{go handler(data,typeo)} else {handler(data,typeo)}
 	}
