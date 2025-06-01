@@ -12,12 +12,12 @@ pub fn new(token string) Bot {
 fn convert_to_json(data string) !json2.Any {
 	return json2.raw_decode(data)!
 }
-pub fn (mut bot Bot) on(handler fn(MessageContext,string)){
+pub fn (mut bot Bot) on(handler fn(Context,string)){
 	bot.msg_handlers << handler
 }
 fn (bot Bot) handle_update(update json2.Any,speedup bool){
 	mut typeo := ""
-	data := json.decode(MessageContext,update.str()) or {return}
+	data := json.decode(Context,update.str()) or {return}
 	if data.message.date != 0{
 		typeo += "message"
 	} else if data.edited_message.date != 0{
