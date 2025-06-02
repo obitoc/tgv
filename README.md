@@ -4,7 +4,7 @@
 ## :star: Example `example.v`
 ## Installtion
 ```console
-$ git clone https://github.com/obitoc/tgv.git ~/.vmodules/tgv
+$ v install --git https://github.com/obitoc/tgv.git
 ```
 ### :heart: use v doc for gen ref ( You can see telegram api ref and know the opts you can put )
 
