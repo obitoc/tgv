@@ -24,6 +24,7 @@ bot.send_message(id,"msg",map[string]string{})!
 // for bot message Context
 bot.on(fn [bot](ctx json2.Any,typeo string){})
 // pass a func to handler pass bot into the scope 2 params one is Context and two is type of context
-
+bot.polling(true)!
+// This will run the Bot And Loop for every Update You can set false for no gorutine
 
 // TODO: make it work `v new` way
