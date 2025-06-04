@@ -1,6 +1,6 @@
 module tgv
 import x.json2
-
+// Bot Config
 pub struct Bot {
 	pub:
 		url string
